@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apostila - Fase 1: Fundamentos de Git e GitHub</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #0d6efd, #0a58ca);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        h1 { margin: 0; font-size: 2.5rem; }
+        h2 { color: #0d6efd; border-bottom: 3px solid #0d6efd; padding-bottom: 10px; }
+        h3 { color: #0a58ca; }
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        nav {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        nav a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover { text-decoration: underline; }
+        section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        pre {
+            background: #f1f3f5;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 5px solid #0d6efd;
+        }
+        code {
+            font-family: 'Consolas', monospace;
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .dica {
+            background: #d4edda;
+            border-left: 6px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        .pratica {
+            background: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #0d6efd;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚀 Apostila - Fase 1</h1>
+        <p><strong>Fundamentos de Git e GitHub</strong><br>
+        Do zero ao primeiro commit profissional</p>
+    </header>
+
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="#introducao">1. Introdução</a></li>
+                <li><a href="#instalacao">2. Instalação</a></li>
+                <li><a href="#configuracao">3. Configuração Inicial</a></li>
+                <li><a href="#conceitos">4. Conceitos Básicos</a></li>
+                <li><a href="#comandos">5. Comandos Essenciais</a></li>
+                <li><a href="#ciclo">6. Ciclo de Vida dos Arquivos</a></li>
+                <li><a href="#github">7. Conectando com o GitHub</a></li>
+                <li><a href="#praticas">8. Boas Práticas</a></li>
+                <li><a href="#exercicios">9. Exercícios Práticos</a></li>
+            </ul>
+        </nav>
+
+        <section id="introducao">
+            <h2>1. Introdução ao Git e GitHub</h2>
+            <p><strong>Git</strong> é um sistema de controle de versão distribuído, criado por Linus Torvalds. Ele permite rastrear todas as alterações no seu código ao longo do tempo.</p>
+            <p><strong>GitHub</strong> é uma plataforma online que hospeda repositórios Git, facilita a colaboração em equipe e oferece ferramentas extras (Pull Requests, Issues, Actions, etc.).</p>
+            
+            <div class="dica">
+                <strong>Por que aprender Git?</strong><br>
+                • Trabalhar em equipe sem bagunçar o código<br>
+                • Voltar para versões anteriores facilmente<br>
+                • Mostrar seu portfólio de forma profissional<br>
+                • É exigência básica em quase todas as vagas de programação
+            </div>
+        </section>
+
+        <section id="instalacao">
+            <h2>2. Instalação do Git</h2>
+            <h3>Windows</h3>
+            <p>Baixe em: <a href="https://git-scm.com/download/win" target="_blank">git-scm.com/download/win</a></p>
+            
+            <h3>Mac</h3>
+            <pre><code>brew install git</code></pre>
+            <p>ou baixe o instalador oficial.</p>
+            
+            <h3>Linux (Ubuntu/Debian)</h3>
+            <pre><code>sudo apt update && sudo apt install git</code></pre>
+
+            <p>Após instalar, verifique a versão:</p>
+            <pre><code>git --version</code></pre>
+        </section>
+
+        <section id="configuracao">
+            <h2>3. Configuração Inicial (obrigatório!)</h2>
+            <p>Configure seu nome e e-mail. Esses dados aparecem em todos os commits.</p>
+            
+            <pre><code>git config --global user.name "Seu Nome Completo"
+git config --global user.email "seuemail@exemplo.com"</code></pre>
+
+            <p>Verifique as configurações:</p>
+            <pre><code>git config --global user.name
+git config --global user.email
+git config --list</code></pre>
+
+            <div class="dica">
+                Use o mesmo e-mail cadastrado na sua conta do GitHub para que os commits fiquem vinculados corretamente.
+            </div>
+        </section>
+
+        <section id="conceitos">
+            <h2>4. Conceitos Básicos</h2>
+            <table>
+                <tr><th>Conceito</th><th>Descrição</th></tr>
+                <tr><td>Repositório (Repository)</td><td>Pasta que contém todo o histórico do projeto</td></tr>
+                <tr><td>Commit</td><td>Um "ponto no tempo" que salva as alterações</td></tr>
+                <tr><td>Branch (ramo)</td><td>Linha de desenvolvimento (por padrão: main ou master)</td></tr>
+                <tr><td>Remote</td><td>Repositório remoto (ex: no GitHub)</td></tr>
+                <tr><td>.gitignore</td><td>Arquivo que diz ao Git quais arquivos/pastas ignorar</td></tr>
+            </table>
+        </section>
+
+        <section id="comandos">
+            <h2>5. Comandos Essenciais da Fase 1</h2>
+            
+            <h3>Criar um repositório novo</h3>
+            <pre><code>mkdir meu-projeto
+cd meu-projeto
+git init</code></pre>
+
+            <h3>Clonar um repositório existente (do GitHub)</h3>
+            <pre><code>git clone https://github.com/usuario/nome-do-repo.git</code></pre>
+
+            <h3>Ver o status</h3>
+            <pre><code>git status</code></pre>
+
+            <h3>Adicionar arquivos</h3>
+            <pre><code>git add nome-do-arquivo.txt     # um arquivo
+git add .                      # todos os arquivos</code></pre>
+
+            <h3>Fazer commit</h3>
+            <pre><code>git commit -m "Mensagem clara do que foi feito"</code></pre>
+
+            <h3>Ver histórico</h3>
+            <pre><code>git log
+git log --oneline --graph</code></pre>
+
+            <h3>Diferenças</h3>
+            <pre><code>git diff                  # alterações não adicionadas
+git diff --staged          # alterações já adicionadas</code></pre>
+        </section>
+
+        <section id="ciclo">
+            <h2>6. Ciclo de Vida dos Arquivos</h2>
+            <p>Working Directory → Staging Area → Commit → Repositório</p>
+            
+            <pre><code># Fluxo mais usado:
+git status
+git add .
+git commit -m "feat: adiciona página inicial"
+git status</code></pre>
+        </section>
+
+        <section id="github">
+            <h2>7. Conectando com o GitHub</h2>
+            
+            <h3>Passo a passo:</h3>
+            <ol>
+                <li>Crie um repositório novo no site do GitHub (não marque "Add a README file")</li>
+                <li>No terminal, dentro do seu projeto:</li>
+            </ol>
+            
+            <pre><code>git remote add origin https://github.com/SEU-USUARIO/nome-do-repo.git
+git branch -M main
+git push -u origin main</code></pre>
+
+            <div class="pratica">
+                <strong>Primeira vez no GitHub?</strong><br>
+                Crie uma conta gratuita em <a href="https://github.com" target="_blank">github.com</a> e faça seu primeiro "Hello World" no GitHub.
+            </div>
+        </section>
+
+        <section id="praticas">
+            <h2>8. Boas Práticas de Commit</h2>
+            <p>Use o padrão <strong>Conventional Commits</strong> (recomendado):</p>
+            <ul>
+                <li><code>feat:</code> nova funcionalidade</li>
+                <li><code>fix:</code> correção de bug</li>
+                <li><code>docs:</code> alteração na documentação</li>
+                <li><code>chore:</code> manutenção (atualizar dependências, etc.)</li>
+                <li><code>refactor:</code> refatoração de código</li>
+            </ul>
+
+            <p>Exemplos bons:</p>
+            <pre><code>feat: adiciona formulário de contato
+fix: corrige erro de validação no login
+chore: atualiza dependências do projeto</code></pre>
+
+            <h3>Arquivo .gitignore</h3>
+            <p>Crie um arquivo chamado <code>.gitignore</code> na raiz do projeto:</p>
+            <pre><code># Exemplo básico
+node_modules/
+*.log
+.env
+.DS_Store
+dist/
+build/</code></pre>
+        </section>
+
+        <section id="exercicios">
+            <h2>9. Exercícios Práticos (Faça todos!)</h2>
+            <ol>
+                <li>Instale o Git e configure seu nome e e-mail</li>
+                <li>Crie uma pasta chamada <code>meu-primeiro-repo</code>, inicialize o Git e faça 3 commits com arquivos diferentes</li>
+                <li>Crie um repositório no GitHub e envie seu projeto local (<code>git push</code>)</li>
+                <li>Clone seu próprio repositório em outra pasta e faça uma alteração + push</li>
+                <li>Crie um arquivo <code>README.md</code> com Markdown básico e commite</li>
+                <li>Adicione um <code>.gitignore</code> adequado para a linguagem que você usa</li>
+            </ol>
+
+            <div class="dica">
+                <strong>Dica de ouro:</strong> Faça commits pequenos e frequentes. Um commit = uma ideia ou mudança lógica.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p><strong>Apostila Fase 1 - Git e GitHub</strong> • Esron • 2026</p>
+        <p>Próxima fase: Branches, Pull Requests e Colaboração</p>
+        <p>Pratique todos os dias! O Git se aprende fazendo.</p>
+    </footer>
+</body>
+</html>

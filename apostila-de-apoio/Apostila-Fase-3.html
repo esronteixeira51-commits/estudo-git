@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apostila - Fase 3: Git Nível Intermediário / Profissional</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, #0d6efd, #0a58ca);
+            color: white;
+            padding: 2.5rem 0;
+            text-align: center;
+        }
+        h1 { margin: 0; font-size: 2.6rem; }
+        h2 { color: #0d6efd; border-bottom: 3px solid #0d6efd; padding-bottom: 12px; }
+        h3 { color: #0a58ca; }
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        nav {
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            position: sticky;
+            top: 10px;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        nav a {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover { text-decoration: underline; }
+        section {
+            background: white;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        pre {
+            background: #f1f3f5;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 6px solid #0d6efd;
+            font-size: 0.95rem;
+        }
+        code {
+            font-family: 'Consolas', monospace;
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .dica {
+            background: #d4edda;
+            border-left: 6px solid #28a745;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .alerta {
+            background: #f8d7da;
+            border-left: 6px solid #dc3545;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        .pratica {
+            background: #fff3cd;
+            border-left: 6px solid #ffc107;
+            padding: 18px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #0d6efd;
+            color: white;
+        }
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⚡ Apostila - Fase 3</h1>
+        <p><strong>Nível Intermediário / Profissional em Git e GitHub</strong><br>
+        Comandos que separam amadores de profissionais</p>
+    </header>
+
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="#introducao">1. Introdução</a></li>
+                <li><a href="#undo">2. Desfazendo Mudanças</a></li>
+                <li><a href="#rebase">3. Rebase</a></li>
+                <li><a href="#amend">4. Amend e Squash</a></li>
+                <li><a href="#reflog">5. Reflog - O Salva-vidas</a></li>
+                <li><a href="#cherry-pick">6. Cherry-pick</a></li>
+                <li><a href="#github-avancado">7. GitHub Avançado</a></li>
+                <li><a href="#cli">8. GitHub CLI (gh)</a></li>
+                <li><a href="#boas-praticas">9. Boas Práticas Profissionais</a></li>
+                <li><a href="#exercicios">10. Exercícios Práticos</a></li>
+            </ul>
+        </nav>
+
+        <section id="introducao">
+            <h2>1. Introdução à Fase 3</h2>
+            <p>Nesta fase você vai aprender os comandos e técnicas que os desenvolvedores mais experientes usam no dia a dia em empresas.</p>
+            <p>Domine esta fase e você estará pronto para trabalhar em qualquer equipe de desenvolvimento.</p>
+        </section>
+
+        <section id="undo">
+            <h2>2. Desfazendo Mudanças (Undo Operations)</h2>
+            
+            <h3>git reset</h3>
+            <table>
+                <tr><th>Modo</th><th>Comando</th><th>O que acontece</th></tr>
+                <tr><td>--soft</td><td><code>git reset --soft HEAD~1</code></td><td>Desfaz o commit, mas mantém as alterações no Staging</td></tr>
+                <tr><td>--mixed (padrão)</td><td><code>git reset HEAD~1</code></td><td>Desfaz o commit e tira do Staging</td></tr>
+                <tr><td>--hard</td><td><code>git reset --hard HEAD~1</code></td><td>Desfaz tudo (cuidado! perde alterações)</td></tr>
+            </table>
+
+            <h3>git revert</h3>
+            <pre><code>git revert HEAD          # cria um commit que desfaz o último commit
+git revert abc1234       # desfaz um commit específico</code></pre>
+
+            <div class="alerta">
+                <strong>Atenção:</strong><br>
+                <code>git reset --hard</code> é perigoso. Use apenas se tiver certeza. Prefira <code>git revert</code> em branches compartilhadas.
+            </div>
+        </section>
+
+        <section id="rebase">
+            <h2>3. Interactive Rebase (O comando mais poderoso)</h2>
+            <p>Rebase permite "reorganizar" o histórico de commits de forma limpa.</p>
+            
+            <pre><code>git rebase -i HEAD~5     # interativo nos últimos 5 commits</code></pre>
+
+            <p>No editor que abre, você pode:</p>
+            <ul>
+                <li><code>pick</code> → manter o commit</li>
+                <li><code>reword</code> → mudar a mensagem</li>
+                <li><code>edit</code> → editar o commit</li>
+                <li><code>squash</code> / <code>fixup</code> → juntar commits</li>
+                <li><code>drop</code> → remover o commit</li>
+            </ul>
+
+            <div class="dica">
+                <strong>Regra de ouro:</strong> Nunca faça rebase em branches que já foram compartilhadas com outras pessoas (principalmente a <code>main</code>).
+            </div>
+        </section>
+
+        <section id="amend">
+            <h2>4. Amend e Squash de Commits</h2>
+            
+            <h3>Alterar o último commit</h3>
+            <pre><code>git commit --amend               # muda mensagem ou adiciona arquivos
+git commit --amend --no-edit    # só adiciona arquivos sem mudar mensagem</code></pre>
+
+            <h3>Squash (juntar commits)</h3>
+            <p>Muito usado antes de abrir Pull Request para deixar o histórico limpo.</p>
+        </section>
+
+        <section id="reflog">
+            <h2>5. Reflog - O maior salva-vidas do Git</h2>
+            <p>O <code>reflog</code> registra tudo que você fez no repositório, mesmo commits "perdidos".</p>
+            
+            <pre><code>git reflog
+git reflog --oneline</code></pre>
+
+            <p>Recuperar um commit perdido:</p>
+            <pre><code>git reset --hard abc1234   # usando o hash do reflog</code></pre>
+
+            <div class="dica">
+                <strong>Dica profissional:</strong> Sempre que achar que "perdeu" algo no Git, rode <code>git reflog</code> primeiro.
+            </div>
+        </section>
+
+        <section id="cherry-pick">
+            <h2>6. Cherry-pick</h2>
+            <p>Permite copiar um commit específico de uma branch para outra.</p>
+            
+            <pre><code>git checkout main
+git cherry-pick abc1234     # copia o commit com esse hash</code></pre>
+        </section>
+
+        <section id="github-avancado">
+            <h2>7. GitHub Avançado</h2>
+            
+            <h3>Recursos importantes:</h3>
+            <ul>
+                <li><strong>Branch Protection Rules</strong> → Protege a branch main (exige PR aprovado, status checks, etc.)</li>
+                <li><strong>CODEOWNERS</strong> → Define quem deve revisar cada pasta/arquivo</li>
+                <li><strong>GitHub Projects</strong> → Kanban integrado</li>
+                <li><strong>Discussions</strong> → Fórum dentro do repositório</li>
+                <li><strong>Releases e Tags</strong> → Versionamento semântico (v1.2.3)</li>
+                <li><strong>GitHub Pages</strong> → Hospedar site estático gratuitamente</li>
+            </ul>
+
+            <h3>Como criar um CODEOWNERS</h3>
+            <p>Crie o arquivo <code>.github/CODEOWNERS</code> na raiz:</p>
+            <pre><code># Exemplo
+*                   @seuusuario
+/src/frontend/      @time-frontend
+/docs/              @time-docs</code></pre>
+        </section>
+
+        <section id="cli">
+            <h2>8. GitHub CLI (gh) - Trabalhar sem sair do terminal</h2>
+            <p>Instalação: <a href="https://cli.github.com" target="_blank">cli.github.com</a></p>
+            
+            <pre><code>gh auth login
+gh repo create
+gh pr create
+gh pr list
+gh issue create</code></pre>
+
+            <div class="pratica">
+                <strong>Vantagem:</strong> Você consegue criar PRs, issues e revisar código direto do terminal, muito mais rápido.
+            </div>
+        </section>
+
+        <section id="boas-praticas">
+            <h2>9. Boas Práticas Profissionais</h2>
+            <ul>
+                <li>Use commits atômicos (uma mudança por commit)</li>
+                <li>Escreva mensagens claras seguindo Conventional Commits</li>
+                <li>Mantenha o histórico limpo (rebase + squash antes do merge)</li>
+                <li>Nunca faça <code>git push --force</code> em branches compartilhadas (use --force-with-lease)</li>
+                <li>Faça review de código com atenção</li>
+                <li>Configure proteção de branch na main</li>
+            </ul>
+        </section>
+
+        <section id="exercicios">
+            <h2>10. Exercícios Práticos (Essenciais para virar profissional)</h2>
+            <ol>
+                <li>Crie um repositório e faça vários commits. Depois use <code>git reset --soft</code>, <code>--mixed</code> e <code>--hard</code> para entender a diferença.</li>
+                <li>Faça um Interactive Rebase e pratique <code>reword</code>, <code>squash</code> e <code>drop</code>.</li>
+                <li>Simule perder um commit e recupere usando <code>git reflog</code>.</li>
+                <li>Configure Branch Protection Rules na branch <code>main</code> do seu repositório.</li>
+                <li>Crie um arquivo <code>.github/CODEOWNERS</code>.</li>
+                <li>Instale o GitHub CLI e crie um Pull Request usando apenas o terminal.</li>
+                <li>Limpe o histórico de um repositório de testes usando rebase interativo.</li>
+            </ol>
+
+            <div class="dica">
+                <strong>Meta da Fase 3:</strong> Conseguir limpar histórico, desfazer erros com segurança e configurar repositórios profissionais no GitHub.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p><strong>Apostila Fase 3 - Nível Intermediário / Profissional</strong> • Esron • 2026</p>
+        <p>Próxima e última fase: GitHub Actions, CI/CD, Segurança e Nível Avançado</p>
+        <p>Pratique bastante estes comandos. Eles são usados diariamente em empresas reais.</p>
+    </footer>
+</body>
+</html>
