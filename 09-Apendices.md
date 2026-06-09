@@ -177,9 +177,214 @@ O Git é uma ferramenta com décadas de profundidade. O que está neste livro é
 
 ## Apêndice D — Soluções Detalhadas dos Exercícios Práticos
 
-> As soluções completas e detalhadas dos 11 exercícios práticos estão no arquivo **`10-Apendice_D_Solucoes_Detalhadas.md`**.
->
-> Lá você encontra, para cada exercício: situação, objetivo, passo a passo comentado, resultado esperado e lição aprendida.
+Resoluções completas dos 11 exercícios do Capítulo 15. Cada exercício traz a situação, os passos com comandos e a lição principal.
+
+---
+
+### Exercício 01 — Seu primeiro repositório completo
+
+**Situação:** você está começando um novo projeto do zero e quer versioná-lo corretamente desde o início.
+
+```bash
+mkdir meu-projeto && cd meu-projeto
+git init
+
+# Crie os arquivos iniciais (README.md, index.html, etc.)
+
+git add .
+git commit -m "feat: estrutura inicial do projeto"
+
+# Crie o repositório no GitHub (sem README). Copie a URL.
+
+git remote add origin <url>
+git push -u origin main
+```
+
+> *Todo projeto merece um repositório desde o primeiro arquivo. Nunca "vou fazer depois".*
+
+---
+
+### Exercício 02 — Trabalhando com branches
+
+**Situação:** você precisa adicionar uma nova funcionalidade sem afetar o código estável da `main`.
+
+```bash
+git switch -c feature/nova-funcionalidade
+
+# Faça as modificações necessárias nos arquivos.
+
+git add . && git commit -m "feat: adiciona nova funcionalidade"
+git switch main && git merge feature/nova-funcionalidade
+git branch -d feature/nova-funcionalidade
+```
+
+> *Branches são baratas e rápidas no Git. Use uma para cada funcionalidade, sem exceção.*
+
+---
+
+### Exercício 03 — Desfazendo um erro
+
+**Situação:** você commitou arquivos errados ou com uma mensagem ruim e precisa corrigir.
+
+```bash
+git log --oneline           # identifique o commit problemático
+git reset --soft HEAD~1     # desfaz o commit, mantém os arquivos
+
+# Corrija o que for necessário nos arquivos.
+
+git add . && git commit -m "feat: mensagem correta"
+```
+
+> *`git reset --soft` é seguro. Só use `--hard` quando tiver certeza absoluta.*
+
+---
+
+### Exercício 04 — Simulando main vs master
+
+**Situação:** o GitHub criou a branch `main` mas seu repositório local usa `master` — os históricos não se conectam.
+
+```bash
+git switch master
+git merge main --allow-unrelated-histories
+
+# Resolva eventuais conflitos.
+
+git push origin master
+git push origin --delete main   # opcional: remove branch main remota
+```
+
+> *A flag `--allow-unrelated-histories` força o Git a unir dois históricos independentes.*
+
+---
+
+### Exercício 05 — Publicando no GitHub do zero
+
+**Situação:** você tem um projeto local pronto e quer publicá-lo no GitHub pela primeira vez.
+
+```bash
+# Crie o repositório no GitHub — sem marcar "Add a README file".
+# Copie a URL HTTPS ou SSH gerada.
+
+git remote add origin <url>
+git branch -M main
+git push -u origin main
+```
+
+> *O `-u` no primeiro push configura o rastreamento. Nos próximos, basta `git push`.*
+
+---
+
+### Exercício 06 — Corrigindo remote errado
+
+**Situação:** você percebeu que o repositório local está apontando para a URL errada no GitHub.
+
+```bash
+git remote -v    # confirme qual URL está configurada
+git remote set-url origin https://github.com/SEU-USUARIO/repo-correto.git
+git remote -v    # confirme a correção
+git push origin main
+```
+
+> *Sempre verifique `git remote -v` antes de fazer push em repositórios novos.*
+
+---
+
+### Exercício 07 — PC formatado: recuperando o projeto
+
+**Situação:** seu computador foi formatado e você precisa retomar o trabalho de onde parou.
+
+```bash
+# Instale Git e VS Code (conforme Parte 0 do livro).
+
+git config --global user.name "Seu Nome"
+git config --global user.email "email@exemplo.com"
+git clone https://github.com/SEU-USUARIO/projeto.git
+
+# Abra a pasta no VS Code e continue normalmente.
+```
+
+> *O GitHub é seu backup. Enquanto você fizer push regularmente, nunca perde nada.*
+
+---
+
+### Exercício 08 — Dois PCs, um projeto
+
+**Situação:** você trabalha no projeto em casa e no trabalho. Precisa manter os dois sincronizados.
+
+```bash
+git pull origin main              # sempre antes de começar a trabalhar
+
+# Faça suas alterações normalmente.
+
+git add . && git commit -m "feat: trabalho do dia"
+git push origin main              # sempre ao terminar
+
+# No outro computador: git pull antes de continuar.
+```
+
+> *Pull antes, push depois. Esse hábito evita 90% dos conflitos em projetos pessoais.*
+
+---
+
+### Exercício 09 — Equipe com arquivos diferentes
+
+**Situação:** duas pessoas do time editaram arquivos diferentes ao mesmo tempo. O merge cria um histórico duplo.
+
+```bash
+# Pessoa A: commita alterações em index.html e faz push.
+
+# Pessoa B: commita alterações em style.css (sem ter feito pull antes).
+git pull origin main    # Git cria um merge commit automático
+git push origin main
+
+# Nenhum conflito — arquivos diferentes, merge automático.
+```
+
+> *Quando dois colaboradores editam arquivos diferentes, o Git resolve o merge sozinho.*
+
+---
+
+### Exercício 10 — Conflito no mesmo arquivo: resolução avançada
+
+**Situação:** dois colaboradores editaram a mesma função no mesmo arquivo. O Git não sabe qual versão usar.
+
+```bash
+# Pessoa A: altera a função com desconto de 15% e faz push.
+
+# Pessoa B:
+git pull origin main    # conflito aparece
+
+# Abra o arquivo — localize os marcadores <<<<<<, ======= e >>>>>>>.
+# Decida qual versão fica (ou combine as duas).
+# Remova os marcadores.
+
+git add <arquivo> && git commit
+```
+
+> *Conflito não é erro do Git. É falta de comunicação na equipe — resolva e siga em frente.*
+
+---
+
+### Exercício 11 — Fork + Pull Request: fluxo open source
+
+**Situação:** você quer contribuir com um projeto open source do qual não é colaborador direto.
+
+```bash
+# Acesse o repositório no GitHub e clique em Fork.
+
+git clone https://github.com/SEU-USUARIO/repo-forkado.git
+git remote add upstream https://github.com/DONO/repo-original.git
+git pull upstream main                         # atualizar antes de trabalhar
+git switch -c feature/minha-contribuicao
+
+# Faça as alterações. Commite com mensagem clara.
+
+git push origin feature/minha-contribuicao
+
+# No GitHub: abra um Pull Request do seu fork para o repositório original.
+```
+
+> *O fluxo Fork + PR é como milhões de projetos open source recebem contribuições todos os dias.*
 
 ---
 
